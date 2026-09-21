@@ -2,10 +2,14 @@ const textEl = document.querySelector("#text");
 const inputEl = document.querySelector("#input");
 const timerEl = document.querySelector("#timer");
 const accuracyEl = document.querySelector("#accuracy");
+const wpmEl = document.querySelector("#wpm");
 
 let time = 0; 
 let timer; 
 let started = false; 
+    
+let correctCharacteres = 0;
+
 const sentence = "Lorem ipsum dolor sit amet, consectetur adipisicing elit.";
 
 sentence.split("").forEach ((character) => { 
@@ -30,7 +34,7 @@ inputEl.addEventListener("input", () => {
     const typedText = inputEl.value; 
     const characters = textEl.querySelectorAll("span"); 
 
-    let correctCharacteres = 0;
+    correctCharacteres = 0;
 
     characters.forEach((character, index) => {
         if (typedText[index] === undefined) { 
@@ -51,6 +55,13 @@ inputEl.addEventListener("input", () => {
     if (typedText.length > 0) {
         const accuracy = (correctCharacteres / typedText.length) * 100;
         accuracyEl.textContent = `Accuracy: ${accuracy.toFixed(0)}%`;
+    }
+
+    // Calculate WPM
+    if (time > 0) {
+        const minutes = time / 60;
+        const wpm = (typedText.length / 5) / minutes;
+        wpmEl.textContent = `WPM: ${Math.round(wpm)}`;
     }
 
     if (typedText.length === sentence.length) {
