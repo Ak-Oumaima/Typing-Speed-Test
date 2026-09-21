@@ -51,20 +51,20 @@ inputEl.addEventListener("input", () => {
         }
     });
 
-    // Calculate accuracy
-    if (typedText.length > 0) {
-        const accuracy = (correctCharacteres / typedText.length) * 100;
-        accuracyEl.textContent = `Accuracy: ${accuracy.toFixed(0)}%`;
-    }
-
-    // Calculate WPM
-    if (time > 0) {
-        const minutes = time / 60;
-        const wpm = (typedText.length / 5) / minutes;
-        wpmEl.textContent = `WPM: ${Math.round(wpm)}`;
-    }
-
     if (typedText.length === sentence.length) {
         clearInterval(timer);
+
+        // Calculate accuracy
+        if (typedText.length > 0) {
+            const accuracy = (correctCharacteres / typedText.length) * 100;
+            accuracyEl.textContent = `Accuracy: ${accuracy.toFixed(0)}%`; // toFixed(0) return the value without comma (fixed value)
+        }
+        // Calculate WPM
+        if (time > 0) {
+            const minutes = time / 60;
+            const wpm = (typedText.length / 5) / minutes;
+            wpmEl.textContent = `WPM: ${Math.round(wpm)}`;
+        }
+
     }
 });
