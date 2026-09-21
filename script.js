@@ -1,6 +1,7 @@
 const textEl = document.querySelector("#text");
 const inputEl = document.querySelector("#input");
 const timerEl = document.querySelector("#timer");
+const accuracyEl = document.querySelector("#accuracy");
 
 let time = 0; 
 let timer; 
@@ -29,6 +30,8 @@ inputEl.addEventListener("input", () => {
     const typedText = inputEl.value; 
     const characters = textEl.querySelectorAll("span"); 
 
+    let correctCharacteres = 0;
+
     characters.forEach((character, index) => {
         if (typedText[index] === undefined) { 
             character.classList.remove("correct");
@@ -36,11 +39,19 @@ inputEl.addEventListener("input", () => {
         }else if (typedText[index] === character.textContent) { 
             character.classList.add("correct");
             character.classList.remove("wrong");
+
+            correctCharacteres++;
         } else { 
             character.classList.add("wrong");
             character.classList.remove("correct");
         }
     });
+
+    // Calculate accuracy
+    if (typedText.length > 0) {
+        const accuracy = (correctCharacteres / typedText.length) * 100;
+        accuracyEl.textContent = `Accuracy: ${accuracy.toFixed(0)}%`;
+    }
 
     if (typedText.length === sentence.length) {
         clearInterval(timer);
